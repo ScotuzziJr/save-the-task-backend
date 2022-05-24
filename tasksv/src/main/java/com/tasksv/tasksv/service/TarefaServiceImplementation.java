@@ -6,26 +6,31 @@ public class TarefaServiceImplementation implements TarefaService {
     // implementação dos métodos
     public Tarefa getTarefaPorId()
     {
-        return ;
+
+        return null;
     }
 
     public ArrayList<Tarefa> getTarefas()
     {
-        return ;
+
+        return null;
     }
 
     public void inserir(Tarefa tarefa)
     {
-        return ;
+
+        return;
     }
 
     public Tarefa editar(Tarefa tarefa)
     {
-        return ;
+
+        return null;
     }
 
     public void excluir(int id)
     {
-        return ;
+
+        return;
     }
 }
