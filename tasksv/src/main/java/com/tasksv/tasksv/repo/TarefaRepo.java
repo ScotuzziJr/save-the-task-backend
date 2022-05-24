@@ -6,4 +6,3 @@ public interface TarefaRepo extends JpaRepository<Client, Long>
 {
     Client findByEmail(String email);
 }
-

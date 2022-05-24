@@ -11,26 +11,31 @@ public class TarefaController
     // métodos
     public ResponseEntity<ArrayList<Tarefa>> getTarefas()
     {
-        return ;
+
+        return null;
     }
 
     public ResponseEntity<Tarefa> getTarefaPorId()
     {
-        return ;
+
+        return null;
     }
 
     public ResponseEntity<Tarefa> inserir(Tarefa tarefa)
     {
-        return ;
+
+        return null;
     }
 
     public ResponseEntity<Tarefa> editar(Tarefa tarefa)
     {
-        return ;
+
+        return null;
     }
 
     public ResponseEntity<Tarefa> excluir(int id)
     {
-        return ;
+
+        return null;
     }
 }
