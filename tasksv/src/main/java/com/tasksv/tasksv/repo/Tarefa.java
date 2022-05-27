@@ -35,23 +35,23 @@ public class Tarefa
 //                '}';
 //    }
 
-    public Long getId() { return id; }
+    public Long getId() { return this.id; }
 
     public void setId(Long id) { this.id = id; }
 
-    public String getTitulo() { return titulo; }
+    public String getTitulo() { return this.titulo; }
 
     public void setTitulo(String titulo) { this.titulo = titulo; }
 
-    public String getDescricao() { return descricao; }
+    public String getDescricao() { return this.descricao; }
 
     public void setDescricao(String descricao) { this.descricao = descricao; }
 
-    public boolean isCompletada() { return completada; }
+    public boolean isCompletada() { return this.completada; }
 
     public void setCompletada(boolean completada) { this.completada = completada; }
 
-    public int getPrioridade() { return prioridad; }
+    public int getPrioridade() { return this.prioridade; }
 
     public void setPrioridade(int prioridade) { this.prioridade = prioridade; }
 }
