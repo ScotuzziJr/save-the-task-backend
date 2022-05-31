@@ -1,49 +1,54 @@
 package com.tasksv.saveTheTask.api;
-import java.util.ArrayList;
-import com.fasterxml.jackson.databind.JsonSerializer;
+
 import com.tasksv.saveTheTask.repo.Tarefa;
 import com.tasksv.saveTheTask.service.TarefaService;
-import com.tasksv.saveTheTask.service.TarefaServiceImplementation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
+import java.util.List;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api")
 @RequiredArgsConstructor
-
 public class TarefaController
 {
-
-    // métodos
-    public ResponseEntity<ArrayList<Tarefa>> getTarefas()
+    private final TarefaService tarefaService;
+    @GetMapping("/tarefas")
+    public ResponseEntity<List<Tarefa>> getTarefas()
     {
-
-        return null;
+        return ResponseEntity.ok().body(tarefaService.getTarefas());
     }
 
-    public ResponseEntity<Tarefa> getTarefaPorId()
+    @GetMapping("/tarefas/{id}")
+    public ResponseEntity<Tarefa> getTarefaPorId(@PathVariable("id") int id)
     {
-
-        return null;
+        return ResponseEntity.ok().body(tarefaService.getTarefaPorId(id));
     }
 
-    public ResponseEntity<Tarefa> inserir(Tarefa tarefa)
+    @PostMapping("/tarefas")
+    public ResponseEntity<Tarefa> inserir(@RequestBody Tarefa tarefa)
     {
-
-        return null;
+        URI uri = URI.create(
+                ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/tarefas").toUriString()
+        );
+        return ResponseEntity.created(uri).body(tarefaService.inserir(tarefa));
     }
 
-    public ResponseEntity<Tarefa> editar(Tarefa tarefa)
+    @PutMapping("/tarefas/{id}")
+    public ResponseEntity<?> editar(@RequestBody Tarefa tarefa, @PathVariable("id") int id)
     {
-
-        return null;
+        tarefa.setId(id);
+        tarefaService.editar(tarefa);
+        return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity<Tarefa> excluir(int id)
+    @DeleteMapping("/tarefas/{id}")
+    public ResponseEntity<?> excluir(@PathVariable("id") int id)
     {
-
-        return null;
+        tarefaService.excluir(id);
+        return ResponseEntity.ok().build();
     }
 }

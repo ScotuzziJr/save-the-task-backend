@@ -1,34 +1,58 @@
 package com.tasksv.saveTheTask.service;
+
 import com.tasksv.saveTheTask.repo.Tarefa;
-import java.util.ArrayList;
+import com.tasksv.saveTheTask.repo.TarefaRepo;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+@Transactional
+@Slf4j
 public class TarefaServiceImplementation implements TarefaService {
-    // implementação dos métodos
-    public Tarefa getTarefaPorId()
-    {
+    private final TarefaRepo tarefaRepo;
 
-        return null;
+    @Override
+    public Tarefa getTarefaPorId(int id)
+    {
+        log.info("Pegando tarefa {}", id);
+        return tarefaRepo.findById(id);
     }
 
-    public ArrayList<Tarefa> getTarefas()
+    @Override
+    public List<Tarefa> getTarefas()
     {
-
-        return null;
+        log.info("Pegando todas as tarefas");
+        return tarefaRepo.findAll();
     }
 
-    public void inserir(Tarefa tarefa)
+    @Override
+    public Tarefa inserir(Tarefa tarefa)
     {
-
+        log.info("Salvando tarefa {}", tarefa.getTitulo());
+        return tarefaRepo.save(tarefa);
     }
 
-    public Tarefa editar(Tarefa tarefa)
+    @Override
+    public void editar(Tarefa tarefa)
     {
-
-        return null;
+        log.info("Editando tarefa {}", tarefa.getTitulo());
+        tarefaRepo.setTarefaInfo(
+                tarefa.getTitulo(),
+                tarefa.getDescricao(),
+                tarefa.getPrioridade(),
+                tarefa.getCategoria().getId(),
+                tarefa.isCompletada(),
+                tarefa.getId()
+        );
     }
 
     public void excluir(int id)
     {
-
+        tarefaRepo.deleteById((long) id);
     }
 }
