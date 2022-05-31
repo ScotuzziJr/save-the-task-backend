@@ -19,7 +19,7 @@ public class Tarefa
     private String descricao;
     private boolean completada;
     private int prioridade;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "categoria_id", referencedColumnName = "id")
     private Categoria categoria;
 }

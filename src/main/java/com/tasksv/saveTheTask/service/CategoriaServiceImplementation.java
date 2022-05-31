@@ -23,7 +23,7 @@ public class CategoriaServiceImplementation implements CategoriaService {
     public Categoria getCategoriaPorId(int id)
     {
         log.info("Pegando categoria {}", id);
-        return categoriaRepo.findById(String.valueOf(id));
+        return categoriaRepo.findById(id);
     }
 
     @Override
@@ -54,9 +54,9 @@ public class CategoriaServiceImplementation implements CategoriaService {
     public void excluir(int id)
     {
         List<Tarefa> tarefas = tarefaRepo.findAll();
-        for (Tarefa t: tarefas) {
-            if (t.getCategoria().getId() == id) {
-                t.setCategoria(new Categoria(-1, "Sem categoria", "#ffffff"));
+        for (Tarefa tarefa: tarefas) {
+            if (tarefa.getCategoria().getId() == id) {
+                tarefa.setCategoria(new Categoria(-1, "Sem categoria", "#ffffff"));
             }
         }
 

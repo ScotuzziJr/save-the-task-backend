@@ -20,7 +20,7 @@ public class TarefaServiceImplementation implements TarefaService {
     public Tarefa getTarefaPorId(int id)
     {
         log.info("Pegando tarefa {}", id);
-        return tarefaRepo.findById(String.valueOf(id));
+        return tarefaRepo.findById(id);
     }
 
     @Override
