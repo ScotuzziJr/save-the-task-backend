@@ -23,9 +23,9 @@ public class TarefaController
     }
 
     @GetMapping("/tarefas/{id}")
-    public ResponseEntity<Tarefa> getTarefaPorId(@PathVariable("id") int id)
+    public ResponseEntity<Tarefa> getTarefaPorId(@PathVariable("id") Long id)
     {
-        return ResponseEntity.ok().body(tarefaService.getTarefaPorId(id));
+        return ResponseEntity.ok().body(tarefaService.getTarefaPorId(id).orElse(null));
     }
 
     @PostMapping("/tarefas")
@@ -38,7 +38,7 @@ public class TarefaController
     }
 
     @PutMapping("/tarefas/{id}")
-    public ResponseEntity<?> editar(@RequestBody Tarefa tarefa, @PathVariable("id") int id)
+    public ResponseEntity<?> editar(@RequestBody Tarefa tarefa, @PathVariable("id") Long id)
     {
         tarefa.setId(id);
         tarefaService.editar(tarefa);
@@ -46,7 +46,7 @@ public class TarefaController
     }
 
     @DeleteMapping("/tarefas/{id}")
-    public ResponseEntity<?> excluir(@PathVariable("id") int id)
+    public ResponseEntity<?> excluir(@PathVariable("id") Long id)
     {
         tarefaService.excluir(id);
         return ResponseEntity.ok().build();

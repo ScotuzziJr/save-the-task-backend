@@ -14,7 +14,7 @@ public class Tarefa
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
     private String titulo;
     private String descricao;
     private boolean completada;

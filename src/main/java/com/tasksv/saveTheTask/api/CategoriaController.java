@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.transaction.InvalidTransactionException;
 import java.net.URI;
 import java.util.List;
 
@@ -23,9 +24,9 @@ public class CategoriaController
     }
 
     @GetMapping("/categorias/{id}")
-    public ResponseEntity<Categoria> getCategoriaPorId(@PathVariable("id") int id)
+    public ResponseEntity<Categoria> getCategoriaPorId(@PathVariable("id") Long id)
     {
-        return ResponseEntity.ok().body(categoriaService.getCategoriaPorId(id));
+        return ResponseEntity.ok().body(categoriaService.getCategoriaPorId(id).orElse(null));
     }
 
     @PostMapping("/categorias")
@@ -38,7 +39,7 @@ public class CategoriaController
     }
 
     @PutMapping("/categorias/{id}")
-    public ResponseEntity<?> editar(@RequestBody Categoria categoria, @PathVariable("id") int id)
+    public ResponseEntity<?> editar(@RequestBody Categoria categoria, @PathVariable("id") Long id)
     {
         categoria.setId(id);
         categoriaService.editar(categoria);
@@ -46,9 +47,13 @@ public class CategoriaController
     }
 
     @DeleteMapping("/categorias/{id}")
-    public ResponseEntity<?> excluir(@PathVariable("id") int id)
+    public ResponseEntity<?> excluir(@PathVariable("id") Long id)
     {
-        categoriaService.excluir(id);
-        return ResponseEntity.ok().build();
+        try {
+            categoriaService.excluir(id);
+            return ResponseEntity.ok().build();
+        } catch (InvalidTransactionException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -17,7 +18,7 @@ public class TarefaServiceImplementation implements TarefaService {
     private final TarefaRepo tarefaRepo;
 
     @Override
-    public Tarefa getTarefaPorId(int id)
+    public Optional<Tarefa> getTarefaPorId(Long id)
     {
         log.info("Pegando tarefa {}", id);
         return tarefaRepo.findById(id);
@@ -51,8 +52,8 @@ public class TarefaServiceImplementation implements TarefaService {
         );
     }
 
-    public void excluir(int id)
+    public void excluir(Long id)
     {
-        tarefaRepo.deleteById((long) id);
+        tarefaRepo.deleteById(id);
     }
 }

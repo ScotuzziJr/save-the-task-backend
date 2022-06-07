@@ -8,8 +8,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.InvalidTransactionException;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +22,7 @@ public class CategoriaServiceImplementation implements CategoriaService {
     private final TarefaRepo tarefaRepo;
 
     @Override
-    public Categoria getCategoriaPorId(int id)
+    public Optional<Categoria> getCategoriaPorId(Long id)
     {
         log.info("Pegando categoria {}", id);
         return categoriaRepo.findById(id);
@@ -51,16 +53,16 @@ public class CategoriaServiceImplementation implements CategoriaService {
         );
     }
 
-    public void excluir(int id)
-    {
+    public void excluir(Long id) throws InvalidTransactionException {
         List<Tarefa> tarefas = tarefaRepo.findAll();
         for (Tarefa tarefa: tarefas) {
-            if (tarefa.getCategoria().getId() == id) {
-                tarefa.setCategoria(new Categoria(-1, "Sem categoria", "#ffffff"));
+            if (tarefa.getCategoria().getId().equals(id)) {
+                throw new InvalidTransactionException(
+                        "A categoria esta relacionada a tarefa " + tarefa.getTitulo()
+                );
             }
         }
 
-        tarefaRepo.saveAll(tarefas);
-        categoriaRepo.deleteById((long) id);
+        categoriaRepo.deleteById(id);
     }
 }
