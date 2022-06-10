@@ -46,7 +46,7 @@ public class TarefaServiceImplementation implements TarefaService {
                 tarefa.getTitulo(),
                 tarefa.getDescricao(),
                 tarefa.getPrioridade(),
-                tarefa.getCategoria().getId(),
+                tarefa.getCategoria() == null ? tarefaRepo.getReferenceById(tarefa.getId()).getCategoria().getId() : tarefa.getCategoria().getId(),
                 tarefa.isCompletada(),
                 tarefa.getId()
         );
@@ -54,6 +54,7 @@ public class TarefaServiceImplementation implements TarefaService {
 
     public void excluir(Long id)
     {
+        log.info("Tentando deletar a tarefa {}", tarefaRepo.findById(id));
         tarefaRepo.deleteById(id);
     }
 }
