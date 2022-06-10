@@ -54,15 +54,23 @@ public class CategoriaServiceImplementation implements CategoriaService {
     }
 
     public void excluir(Long id) throws InvalidTransactionException {
-        List<Tarefa> tarefas = tarefaRepo.findAll();
-        for (Tarefa tarefa: tarefas) {
-            if (tarefa.getCategoria().getId().equals(id)) {
-                throw new InvalidTransactionException(
-                        "A categoria esta relacionada a tarefa " + tarefa.getTitulo()
-                );
+        Optional<Categoria> toBeDeleted = categoriaRepo.findById(id);
+        if(toBeDeleted.isPresent()) {
+            log.info("Tentando excluir a categoria {}", categoriaRepo.findById(id));
+            List<Tarefa> tarefas = tarefaRepo.findAll();
+            for (Tarefa tarefa : tarefas) {
+                if (tarefa.getCategoria().getId().equals(id)) {
+                    log.info("Erro: não foi possível deletar a categoria - A categoria esta relacionada a tarefa '{}'", tarefa.getTitulo());
+                    throw new InvalidTransactionException(
+                            "A categoria esta relacionada a tarefa " + tarefa.getTitulo()
+                    );
+                }
             }
+            log.info("Nenhuma tarefa atrelada com esta categoria!");
+            categoriaRepo.deleteById(id);
         }
-
-        categoriaRepo.deleteById(id);
+        else{
+            log.info("Nenhuma categoria foi localizada!");
+        }
     }
 }

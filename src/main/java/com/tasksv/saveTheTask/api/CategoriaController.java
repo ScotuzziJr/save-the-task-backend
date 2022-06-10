@@ -51,7 +51,7 @@ public class CategoriaController
     {
         try {
             categoriaService.excluir(id);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.noContent().build();
         } catch (InvalidTransactionException e) {
             return ResponseEntity.badRequest().build();
         }
