@@ -11,8 +11,8 @@ public interface CategoriaRepo extends JpaRepository<Categoria, Long> {
 
     @Modifying
     @Query(
-            value = "UPDATE Categoria set nome = ?1, cor = ?2 where id = ?3",
+            value = "UPDATE Categoria set nome = ?1, cor = ?2, ativa = ?3 where id = ?4",
             nativeQuery = true
     )
-    void setCategoriaInfo(String nome, String cor, Long id);
+    void setCategoriaInfo(String nome, String cor, Boolean ativa, Long id);
 }

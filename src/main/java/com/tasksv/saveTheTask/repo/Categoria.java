@@ -13,11 +13,11 @@ import javax.persistence.Id;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Categoria
-{
+public class Categoria {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nome;
     private String cor;
+    private Boolean ativa;
 }

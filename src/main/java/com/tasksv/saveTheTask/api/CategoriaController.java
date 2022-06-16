@@ -14,24 +14,20 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-public class CategoriaController
-{
+public class CategoriaController {
     private final CategoriaService categoriaService;
     @GetMapping("/categorias")
-    public ResponseEntity<List<Categoria>> getCategorias()
-    {
+    public ResponseEntity<List<Categoria>> getCategorias() {
         return ResponseEntity.ok().body(categoriaService.getCategorias());
     }
 
     @GetMapping("/categorias/{id}")
-    public ResponseEntity<Categoria> getCategoriaPorId(@PathVariable("id") Long id)
-    {
+    public ResponseEntity<Categoria> getCategoriaPorId(@PathVariable("id") Long id) {
         return ResponseEntity.ok().body(categoriaService.getCategoriaPorId(id).orElse(null));
     }
 
     @PostMapping("/categorias")
-    public ResponseEntity<Categoria> inserir(@RequestBody Categoria categoria)
-    {
+    public ResponseEntity<Categoria> inserir(@RequestBody Categoria categoria) {
         URI uri = URI.create(
                 ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/categorias").toUriString()
         );
@@ -39,16 +35,14 @@ public class CategoriaController
     }
 
     @PutMapping("/categorias/{id}")
-    public ResponseEntity<?> editar(@RequestBody Categoria categoria, @PathVariable("id") Long id)
-    {
+    public ResponseEntity<?> editar(@RequestBody Categoria categoria, @PathVariable("id") Long id) {
         categoria.setId(id);
         categoriaService.editar(categoria);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/categorias/{id}")
-    public ResponseEntity<?> excluir(@PathVariable("id") Long id)
-    {
+    public ResponseEntity<?> excluir(@PathVariable("id") Long id) {
         try {
             categoriaService.excluir(id);
             return ResponseEntity.noContent().build();

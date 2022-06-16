@@ -18,29 +18,25 @@ public class TarefaServiceImplementation implements TarefaService {
     private final TarefaRepo tarefaRepo;
 
     @Override
-    public Optional<Tarefa> getTarefaPorId(Long id)
-    {
+    public Optional<Tarefa> getTarefaPorId(Long id) {
         log.info("Pegando tarefa {}", id);
         return tarefaRepo.findById(id);
     }
 
     @Override
-    public List<Tarefa> getTarefas()
-    {
+    public List<Tarefa> getTarefas() {
         log.info("Pegando todas as tarefas");
         return tarefaRepo.findAll();
     }
 
     @Override
-    public Tarefa inserir(Tarefa tarefa)
-    {
+    public Tarefa inserir(Tarefa tarefa) {
         log.info("Salvando tarefa {}", tarefa.getTitulo());
         return tarefaRepo.save(tarefa);
     }
 
     @Override
-    public void editar(Tarefa tarefa)
-    {
+    public void editar(Tarefa tarefa) {
         log.info("Editando tarefa {}", tarefa.getTitulo());
         tarefaRepo.setTarefaInfo(
                 tarefa.getTitulo(),
@@ -48,6 +44,7 @@ public class TarefaServiceImplementation implements TarefaService {
                 tarefa.getPrioridade(),
                 tarefa.getCategoria() == null ? tarefaRepo.getReferenceById(tarefa.getId()).getCategoria().getId() : tarefa.getCategoria().getId(),
                 tarefa.isCompletada(),
+                tarefa.getDataLimite(),
                 tarefa.getId()
         );
     }

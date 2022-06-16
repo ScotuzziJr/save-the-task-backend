@@ -22,33 +22,30 @@ public class CategoriaServiceImplementation implements CategoriaService {
     private final TarefaRepo tarefaRepo;
 
     @Override
-    public Optional<Categoria> getCategoriaPorId(Long id)
-    {
+    public Optional<Categoria> getCategoriaPorId(Long id) {
         log.info("Pegando categoria {}", id);
         return categoriaRepo.findById(id);
     }
 
     @Override
-    public List<Categoria> getCategorias()
-    {
+    public List<Categoria> getCategorias() {
         log.info("Pegando todas as categorias");
         return categoriaRepo.findAll();
     }
 
     @Override
-    public Categoria inserir(Categoria categoria)
-    {
+    public Categoria inserir(Categoria categoria) {
         log.info("Salvando categoria {}", categoria.getNome());
         return categoriaRepo.save(categoria);
     }
 
     @Override
-    public void editar(Categoria categoria)
-    {
+    public void editar(Categoria categoria) {
         log.info("Editando categoria {}", categoria.getNome());
         categoriaRepo.setCategoriaInfo(
                 categoria.getNome(),
                 categoria.getCor(),
+                categoria.getAtiva(),
                 categoria.getId()
         );
     }
